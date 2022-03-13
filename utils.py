@@ -91,7 +91,14 @@ def save_roc_pr_curve_data(scores, labels, file_path):
     precision_anom, recall_anom, pr_thresholds_anom = precision_recall_curve(truth, -preds, pos_label=0)
     pr_auc_anom = auc(recall_anom, precision_anom)
 
-    np.savez_compressed(file_path,
+    print(f'File path is : {file_path}')
+    curpath = os.path.abspath(os.curdir)
+
+    print(f'Current path is : {curpath}')
+
+    print(f'Combined path is : {curpath + file_path}')
+
+    np.savez_compressed(curpath + file_path,
                         preds=preds, truth=truth,
                         fpr=fpr, tpr=tpr, roc_thresholds=roc_thresholds, roc_auc=roc_auc,
                         precision_norm=precision_norm, recall_norm=recall_norm,
