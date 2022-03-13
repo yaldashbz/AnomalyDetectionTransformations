@@ -1,5 +1,5 @@
 import numpy as np
-from keras.optimizers import Adam
+from tensorflow.keras.optimizers import Adam
 from keras.models import Model
 from keras.layers.merge import subtract
 from keras.utils.generic_utils import Progbar
