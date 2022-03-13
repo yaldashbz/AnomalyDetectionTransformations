@@ -14,7 +14,7 @@ from joblib import Parallel, delayed, parallel_backend
 from keras.models import Model, Input, Sequential
 from keras.layers import Dense, Dropout
 from tensorflow.keras.utils import to_categorical
-from utils import load_cifar10, load_cats_vs_dogs, load_faschhion_mnist, load_cifar100
+from utils import load_cifar10, load_cats_vs_dogs, load_fashion_mnist, load_cifar100
 from utils import save_roc_pr_curve_data, get_class_name_from_index, get_channels_axis
 from transformations import Transformer
 from models.wide_residual_network import create_wide_residual_network
