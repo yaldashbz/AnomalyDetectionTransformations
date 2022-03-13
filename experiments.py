@@ -10,7 +10,7 @@ from scipy.special import psi, polygamma
 from sklearn.metrics import roc_auc_score
 from sklearn.svm import OneClassSVM
 from sklearn.model_selection import ParameterGrid
-from sklearn.externals.joblib import Parallel, delayed
+from sklearn.externals.joblib import Parallel, delayed, parallel_backend
 from keras.models import Model, Input, Sequential
 from keras.layers import Dense, Dropout
 from tensorflow.keras.utils import to_categorical
@@ -144,9 +144,13 @@ def _raw_ocsvm_experiment(dataset_load_fn, dataset_name, single_class_ind):
     pg = ParameterGrid({'nu': np.linspace(0.1, 0.9, num=9),
                         'gamma': np.logspace(-7, 2, num=10, base=2)})
 
-    results = Parallel(n_jobs=6)(
-        delayed(_train_ocsvm_and_score)(d, x_train_task, y_test.flatten() == single_class_ind, x_test)
-        for d in pg)
+    results = None
+    with parallel_backend('threading', n_jobs=6):
+        results = Parallel()(delayed(_train_ocsvm_and_score)(d, x_train_task, y_test.flatten() == single_class_ind, x_test) for d in pg)
+
+    # results = Parallel(n_jobs=6)(
+    #     delayed(_train_ocsvm_and_score)(d, x_train_task, y_test.flatten() == single_class_ind, x_test)
+    #     for d in pg)
 
     best_params, best_auc_score = max(zip(pg, results), key=lambda t: t[-1])
     best_ocsvm = OneClassSVM(**best_params).fit(x_train_task)
@@ -188,9 +192,14 @@ def _cae_ocsvm_experiment(dataset_load_fn, dataset_name, single_class_ind, gpu_q
     pg = ParameterGrid({'nu': np.linspace(0.1, 0.9, num=9),
                         'gamma': np.logspace(-7, 2, num=10, base=2)})
 
-    results = Parallel(n_jobs=6)(
-        delayed(_train_ocsvm_and_score)(d, x_train_task_rep, y_test.flatten() == single_class_ind, x_test_rep)
-        for d in pg)
+    results = None
+    with parallel_backend('threading', n_jobs=6):
+        results = Parallel()(delayed(_train_ocsvm_and_score)(d, x_train_task_rep, y_test.flatten() == single_class_ind, x_test_rep)
+            for d in pg)
+
+    # results = Parallel(n_jobs=6)(
+    #     delayed(_train_ocsvm_and_score)(d, x_train_task_rep, y_test.flatten() == single_class_ind, x_test_rep)
+    #     for d in pg)
 
     best_params, best_auc_score = max(zip(pg, results), key=lambda t: t[-1])
     print(best_params)
