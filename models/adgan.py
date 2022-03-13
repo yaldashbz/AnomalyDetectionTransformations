@@ -3,7 +3,7 @@ from tensorflow.keras.optimizers import Adam
 from keras.models import Model
 from keras.layers.merge import subtract
 from keras.utils.generic_utils import Progbar
-from keras.engine.topology import Input, Layer
+from tensorflow.keras.layers import Layer, InputSpec
 from keras.callbacks import CallbackList
 import keras.backend as K
 
