@@ -96,9 +96,7 @@ def save_roc_pr_curve_data(scores, labels, file_path):
 
     print(f'Current path is : {curpath}')
 
-    print(f'Combined path is : {curpath + file_path}')
-
-    np.savez_compressed(curpath + file_path,
+    np.savez_compressed(curpath,
                         preds=preds, truth=truth,
                         fpr=fpr, tpr=tpr, roc_thresholds=roc_thresholds, roc_auc=roc_auc,
                         precision_norm=precision_norm, recall_norm=recall_norm,
