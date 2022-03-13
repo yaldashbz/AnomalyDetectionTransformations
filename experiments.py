@@ -10,7 +10,7 @@ from scipy.special import psi, polygamma
 from sklearn.metrics import roc_auc_score
 from sklearn.svm import OneClassSVM
 from sklearn.model_selection import ParameterGrid
-from sklearn.externals.joblib import Parallel, delayed, parallel_backend
+from joblib import Parallel, delayed, parallel_backend
 from keras.models import Model, Input, Sequential
 from keras.layers import Dense, Dropout
 from tensorflow.keras.utils import to_categorical
