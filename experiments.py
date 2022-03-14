@@ -22,7 +22,7 @@ from models.encoders_decoders import conv_encoder, conv_decoder
 from models import dsebm, dagmm, adgan
 import keras.backend as K
 
-RESULTS_DIR = ''
+RESULTS_DIR = os.path.abspath(os.curdir)
 
 
 def _transformations_experiment(dataset_load_fn, dataset_name, single_class_ind, gpu_q):
